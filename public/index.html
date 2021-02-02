@@ -90,8 +90,7 @@
           <div class="modal-header">
             <h5 class="modal-title" id="modal-popupinfo-title"></h5>
           </div>
-          <div id="modal-popupinfo-body" class="modal-body">
-          </div>
+          <div id="modal-popupinfo-body" class="modal-body"></div>
           <div class="modal-footer">
             <button
               type="button"
@@ -149,6 +148,50 @@
         </div>
       </div>
     </div>
+    <!--Modal: Create new thread-->
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="modal-create-thread-for"
+      data-backdrop="static"
+      data-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-create-thread-for-label">Create New Thread</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form-create-thread" method="post">
+              <div><input type="text" name="title" placeholder="Title of the thread">
+              </div>
+              <div>
+                <input type="text" name="keywords" placeholder="Search keys seperated by a space">
+              </div>
+              <div>
+                <textarea name="content" cols="50" rows="5" placeholder="Contents of the thread"></textarea>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-outline-primary">Create</button>
+              </div>
+            </form>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--render contents of page-->
     <div id="main-content" class="jumbotron"></div>
     <!-- update the version number as needed -->
