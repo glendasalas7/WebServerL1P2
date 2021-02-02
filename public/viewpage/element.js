@@ -6,5 +6,6 @@ export const menuAbout = document.getElementById('menu-about')
 export const formSignin = document.getElementById('form-signin')
 //main content of the page
 export const mainContent = document.getElementById('main-content')
-
-
+export const popupInfo = document.getElementById('modal-popupinfo')
+export const popupInfoBody = document.getElementById('modal-popupinfo-body')
+export const popupInfoTitle = document.getElementById('modal-popupinfo-title')

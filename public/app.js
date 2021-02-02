@@ -14,3 +14,10 @@ window.onload = () =>{
 
     Routes.routing(pathname, href)
 }
+
+window.addEventListener('popstate', e=>{
+    e.preventDefault()
+    const pathname = e.target.location.pathname
+    const href = e.target.location.href
+    Routes.routing(pathname, href)
+})

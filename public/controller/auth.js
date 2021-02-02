@@ -1,6 +1,7 @@
 import * as Element from '../viewpage/element.js'
 import * as FirebaseController from './firebase_controller.js'
 import * as Constant from '../model/constant.js'
+import * as Util from '../viewpage/util.js'
 export let currentUser
 
 export function addEventListeners() {
@@ -15,6 +16,7 @@ export function addEventListeners() {
             $('#'+ Constant.iDmodalSigninForm).modal('hide')
         } catch (e) {
             console.log(e)
+            Util.popupInfo('Sign in Error', JSON.stringify(e), Constant.iDmodalSigninForm)
         }
     });
 
