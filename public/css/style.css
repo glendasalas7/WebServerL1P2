@@ -1,32 +1,32 @@
-.my-banner{
-    width: 100%;
-    font-size: 200%;
-    text-align: center;
-    color: white;
-    background-color: navy;
+.my-banner {
+  width: 100%;
+  font-size: 200%;
+  text-align: center;
+  color: white;
+  background-color: navy;
 }
 
-li{
-    padding-right:10px;
+li {
+  padding-right: 10px;
 }
 
-input{
-    display: block;
-    margin: 8px 0;
-    padding: 8px 2px;
-    border-width: 0 0 2px;
-    width: 100%;
+input {
+  display: block;
+  margin: 8px 0;
+  padding: 8px 2px;
+  border-width: 0 0 2px;
+  width: 100%;
 }
 
-form-inline{
-    text-align: right;
-    float: right;
+form-inline {
+  text-align: right;
+  float: right;
 }
 
-.modal-menus-pre-auth{
-    display: block;
+.modal-menus-pre-auth {
+  display: block;
 }
 
-.modal-menus-post-auth{
-    display: none;
+.modal-menus-post-auth {
+  display: none;
 }

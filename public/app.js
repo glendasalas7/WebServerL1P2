@@ -8,14 +8,14 @@ Home.addEventListeners()
 About.addEventListeners()
 
 //when reloaded actions
-window.onload = () =>{
+window.onload = () => {
     const pathname = window.location.pathname
     const href = window.location.href
 
     Routes.routing(pathname, href)
 }
 
-window.addEventListener('popstate', e=>{
+window.addEventListener('popstate', e => {
     e.preventDefault()
     const pathname = e.target.location.pathname
     const href = e.target.location.href

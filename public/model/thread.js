@@ -1,5 +1,5 @@
-export class Thread{
-    constructor(data){
+export class Thread {
+    constructor(data) {
         this.uid = data.uid
         this.email = data.email
         this.title = data.title
@@ -8,8 +8,8 @@ export class Thread{
         this.keywordsArray = data.keywordsArray
     }
 
-    serialize(){
-        return{
+    serialize() {
+        return {
             uid: this.uid,
             email: this.email,
             title: this.title,
