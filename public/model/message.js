@@ -1,5 +1,5 @@
-export default class Message {
-    constructor() {
+export class Message {
+    constructor(data) {
         this.threadId = data.threadId
         this.uid = data.uid
         this.email = data.email

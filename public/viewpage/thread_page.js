@@ -3,7 +3,8 @@ import * as Element from '../viewpage/element.js'
 import * as FirebaseController from '../controller/firebase_controller.js'
 import * as Constant from '../model/constant.js'
 import * as Util from '../viewpage/util.js'
-import * as Message from '../model/message.js'
+export { Message } from '../model/message.js'
+import { Message } from '../model/message.js'
 
 export function addThreadViewEvents() {
 
@@ -24,11 +25,11 @@ export async function thread_page(threadId) {
     }
 
     let thread
-    // let messages
+    let messages
 
     try {
         thread = await FirebaseController.getOneThread(threadId)
-        // messages = await FirebaseController.getMessageList(threadId)
+        messages = await FirebaseController.getMessageList(threadId)
     } catch (e) {
         if (Constant.DEV) console.log(e)
         Util.popupInfo('Error', JSON.stringify(e))

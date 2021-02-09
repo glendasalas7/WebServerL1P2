@@ -46,18 +46,16 @@ export async function addMessage(message) {
     return ref.id
 }
 
-// export async function getMessageList(threadId) {
-//     const snapShot = await firebase.firestore().collection(Constant.collectionName.MESSAGES)
-//         .where('threadId', '==', threadId)
-//         .orderBy('timestamp')
-//         .get()
-
-//     const messages = []
-//     snapShot.forEach(doc => {
-//         const m = new Message(doc.data())
-//         m.docId = doc.id
-//         messages.push(m)
-//     })
-
-//     return messages
-// }
+export async function getMessageList(threadId) {
+    const snapShot = await firebase.firestore().collection(Constant.collectionName.MESSAGES)
+        .where('threadId', '==', threadId)
+        .orderBy('timestamp')
+        .get()
+    const messages = []
+    snapShot.forEach(doc => {
+        const m = new Message(doc.data())
+        m.docId = doc.id
+        messages.push(m)
+    })
+    return messages
+}
