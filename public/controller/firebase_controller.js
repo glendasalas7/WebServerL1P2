@@ -3,7 +3,6 @@ import { Thread } from '../model/thread.js'
 import { Message } from '../model/message.js'
 
 
-
 export async function signIn(email, password) {
     await firebase.auth().signInWithEmailAndPassword(email, password)
 }
@@ -66,4 +65,19 @@ export async function getMessageList(threadId) {
         messages.push(m)
     })
     return messages
+}
+
+export async function searchThreads(keywordsArray) {
+    const threadList = []
+    const snapShot = await firebase.firestore().collection(Constant.collectionName.THREADS)
+        .where('keywordsArray', 'array-contains-any', keywordsArray)
+        .orderBy('timestamp', 'desc')
+        .get()
+    snapShot.forEach(doc => {
+        const t = new Thread(doc.data())
+        t.docId = doc.id
+        threadList.push(t)
+    })
+    return threadList
+
 }
