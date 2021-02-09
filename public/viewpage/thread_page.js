@@ -5,17 +5,26 @@ import * as Constant from '../model/constant.js'
 import * as Util from '../viewpage/util.js'
 export { Message } from '../model/message.js'
 import { Message } from '../model/message.js'
+import * as Routes from '../controller/routes.js'
 
 export function addThreadViewEvents() {
 
     const viewForms = document.getElementsByClassName('thread-view-form')
     for (let n = 0; n < viewForms.length; n++) {
-        viewForms[n].addEventListener('submit', e => {
-            e.preventDefault()
-            const threadId = e.target.threadId.value
-            thread_page(threadId)
-        })
+        addThreadFormEvent(viewForms[n])
     }
+}
+
+export function addThreadFormEvent(form) {
+    form.addEventListener('submit', e => {
+        e.preventDefault()
+        // const button = e.target.getElementByTagName('button')[0]
+        // const label = Util.disableButton(button)
+        const threadId = e.target.threadId.value
+        history.pushState(null, null, Routes.routePath.THREAD + '#' + threadId)
+        thread_page(threadId)
+        // Util.enableButton(button,label)
+    })
 }
 
 export async function thread_page(threadId) {
@@ -24,11 +33,20 @@ export async function thread_page(threadId) {
         return
     }
 
+    if (!threadId) {
+        Util.popupInfo('Error', 'Invalid access to Thread')
+        return
+    }
+
     let thread
     let messages
 
     try {
         thread = await FirebaseController.getOneThread(threadId)
+        if (!thread) {
+            Util.popupInfo('Error', 'Thread does not exist')
+            return
+        }
         messages = await FirebaseController.getMessageList(threadId)
     } catch (e) {
         if (Constant.DEV) console.log(e)
@@ -39,9 +57,17 @@ export async function thread_page(threadId) {
         <h4 class = "bg-primary text-white">${thread.title}</h4>
         <div>${thread.email} (At ${new Date(thread.timestamp).toString()}}</div>
         <div class="bg-secondary text-white">${thread.content}</div>
+        <hr>
+
         `;
 
     html += '<div id="message-reply-body">'
+    if (messages && messages.length > 0) {
+        messages.forEach(m => {
+            html += buildMessageView(m)
+        })
+    }
+
     html += '</div>'
 
     html += `
@@ -70,5 +96,22 @@ export async function thread_page(threadId) {
             if (Constant.DEV) console(e)
             Util.popupInfo('Error', JSON.stringify(e))
         }
+        const mTag = document.createElement('div')
+        mTag.innerHTML = buildMessageView(m)
+        document.getElementById('message-reply-body').appendChild(mTag)
+
+        document.getElementById('textarea-add-new-message').value = ''
     })
+}
+
+function buildMessageView(message) {
+    return `
+        <div class ="border border-secondary">
+            <div class ="bg-success text-white">
+                Replied by ${message.email} (At ${new Date(message.timestamp).toString()})
+            </div>
+            ${message.content}
+        </div>
+        <hr>
+    `
 }

@@ -33,6 +33,8 @@ export function addEventListeners() {
             trTag.innerHTML = buildThreadView(thread)
             const threadBodyTag = document.getElementById('thread-body-tag')
             threadBodyTag.prepend(trTag)
+            const threadForms = document.getElementsByClassName('thread-view-form')
+            ThreadPage.addThreadFormEvent(threadForms[0])
             Util.popupInfo('Success', 'A new thread has been added', Constant.iDmodalCreateNewThread)
         } catch (e) {
             if (Constant.DEV) console.log(e)

@@ -35,3 +35,7 @@ textarea {
   width: 95%;
   min-height: 150px;
 }
+
+hr {
+  padding-bottom: 15px;
+}

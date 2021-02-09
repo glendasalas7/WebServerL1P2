@@ -1,6 +1,8 @@
 import * as Constant from '../model/constant.js'
-import * as Message from '../model/message.js'
 import { Thread } from '../model/thread.js'
+import { Message } from '../model/message.js'
+
+
 
 export async function signIn(email, password) {
     await firebase.auth().signInWithEmailAndPassword(email, password)
@@ -35,7 +37,13 @@ export async function getThreadlist() {
 export async function getOneThread(threadId) {
     const ref = await firebase.firestore().collection(Constant.collectionName.THREADS)
         .doc(threadId).get()
+    if (!ref.exists) {
+        return null
+    }
+
     const t = new Thread(ref.data())
+
+
     t.docId = threadId
     return t
 }
@@ -53,7 +61,7 @@ export async function getMessageList(threadId) {
         .get()
     const messages = []
     snapShot.forEach(doc => {
-        const m = new Message(doc.data())
+        var m = new Message(doc.data())
         m.docId = doc.id
         messages.push(m)
     })
