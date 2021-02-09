@@ -30,3 +30,8 @@ form-inline {
 .modal-menus-post-auth {
   display: none;
 }
+
+textarea {
+  width: 95%;
+  min-height: 150px;
+}

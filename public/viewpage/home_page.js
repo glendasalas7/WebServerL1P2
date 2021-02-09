@@ -5,6 +5,7 @@ import * as Constant from '../model/constant.js'
 import { Thread } from '../model/thread.js'
 import * as FirebaseController from '../controller/firebase_controller.js'
 import * as Util from './util.js'
+import * as ThreadPage from './thread_page.js'
 
 export function addEventListeners() {
     Element.menuHome.addEventListener('click', () => {
@@ -22,15 +23,20 @@ export function addEventListeners() {
         const keywords = Element.formCreateThread.keywords.value
         const keywordsArray = keywords.toLowerCase().match(/\S+/g)
         const thread = new Thread(
-            {uid, email, title, keywordsArray, content, timestamp}
+            { uid, email, title, keywordsArray, content, timestamp }
         )
         try {
             const docId = await FirebaseController.addThread(thread)
             thread.docId = docId
-            home_page()//reloads  the page to show new thread
+            // home_page()//reloads  the page to show new thread
+            const trTag = document.createElement('tr')//<tr>.......</tr>
+            trTag.innerHTML = buildThreadView(thread)
+            const threadBodyTag = document.getElementById('thread-body-tag')
+            threadBodyTag.prepend(trTag)
             Util.popupInfo('Success', 'A new thread has been added', Constant.iDmodalCreateNewThread)
         } catch (e) {
-            console.log(e)
+            if (Constant.DEV) console.log(e)
+            Util.popupInfo('Failed to add', JSON.stringify(e))
         }
     })
 }
@@ -42,10 +48,11 @@ export async function home_page() {
     }
 
     let threadList
-    try{
+    try {
         threadList = await FirebaseController.getThreadlist()
-    } catch(e) {
-        console.log(e)
+    } catch (e) {
+        if (Constant.DEV) console.log(e)
+        Util.popupInfo('Error to get Thread', JSON.stringify(e))
     }
 
     let html = `
@@ -63,28 +70,32 @@ export async function home_page() {
         <th scope="col">Posted At</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id ="thread-body-tag">
     `
 
     threadList.forEach(thread => {
-        html += buildThreadView(thread)
+        html += '<tr>' + buildThreadView(thread) + '</tr>'
     })
 
     html += `
         </tbody></table>
     `
     Element.mainContent.innerHTML = html
+    ThreadPage.addThreadViewEvents()
 }
 
 function buildThreadView(thread) {
     return `
-        <tr>
-             <td>View</td>
+            <td>
+                <form method= "post" class= "thread-view-form">
+                    <input type ="hidden" name ="threadId" value="${thread.docId}">
+                    <button type="submit" class="btn btn-outline-primary">View</button>
+                </form>
+            </td>
              <td>${thread.title}</td>
              <td>${thread.keywordsArray.join(' ')}</td>
              <td>${thread.email}</td>
              <td>${thread.content}</td>
              <td>${new Date(thread.timestamp).toString()}</td>
-        </tr>
         `
 }
