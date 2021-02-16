@@ -1,12 +1,25 @@
 import * as Element from './element.js'
 import * as Constant from '../model/constant.js'
 
-export function popupInfo(title, body, modal){
-    if(modal){
-        $('#' +modal).modal('hide')
+export function popupInfo(title, body, modal) {
+    if (modal) {
+        $('#' + modal).modal('hide')
     }
 
     Element.popupInfoTitle.innerHTML = title
     Element.popupInfoBody.innerHTML = body
-    $('#' +Constant.iDmodalPopupInfo).modal('show')
+    $('#' + Constant.iDmodalPopupInfo).modal('show')
+}
+
+
+export function disableButton(button) {
+    button.disabled = true
+    const originalLabel = button.innerHTML
+    button.innerHTML = 'Wait...'
+    return originalLabel
+}
+
+export function enableButton(button, originalLabel) {
+    if (originalLabel) button.innerHTML = originalLabel
+    button.disabled = false
 }

@@ -38,7 +38,7 @@ export function addEventListeners() {
             Util.popupInfo('Success', 'A new thread has been added', Constant.iDmodalCreateNewThread)
         } catch (e) {
             if (Constant.DEV) console.log(e)
-            Util.popupInfo('Failed to add', JSON.stringify(e))
+            Util.popupInfo('Failed to add', JSON.stringify(e), Constant.iDmodalCreateNewThread)
         }
     })
 }
@@ -60,7 +60,7 @@ export async function home_page() {
     buildHomeScreen(threadList, true)
 }
 export function buildHomeScreen(threadList, newButton) {
-    let html =''
+    let html = ''
     if (newButton) {
         html = `
         <button class="btn btn-outline-danger" data-toggle="modal" data-target="#${Constant.iDmodalCreateNewThread}">+ New Thread</button>

@@ -49,7 +49,44 @@ export function addEventListeners() {
             elements = document.getElementsByClassName('modal-menus-post-auth')
             for (let i = 0; i < elements.length; i++)elements[i].style.display = 'none'
             history.pushState(null, null, Routes.routePath.HOME)
-            Element.mainContent.innerHTML = '<h1>Signed Out</h>'
         }
     })
+
+    Element.formSignUp.addEventListener('submit', async e => {
+        e.preventDefault()
+        const email = e.target.email.value
+        const password = e.target.password.value
+        const passwordConfirm = e.target.passwordConfirm.value
+
+        //reset error messages
+        const errorTags = document.getElementsByClassName('error-signup')
+        for (let i = 0; i < errorTags.length; i++) {
+            errorTags[i].innerHTML = ' '
+        }
+
+
+        let valid = true // input validation
+        //email eg....@uco.edu
+        if (password.length < 6) {
+            document.getElementById('signup-error-password')
+                .innerHTML = 'password must be at least 6 chars'
+            valid = false
+        }
+        if (passwordConfirm != password) {
+            document.getElementById('signup-error-passwordConfirm')
+                .innerHTML = 'confirm password does not match'
+            valid = false
+        }
+        if (!valid) return
+
+        try {
+            await FirebaseController.signUp(email, password)
+            Util.popupInfo('Account Created', 'You are signed in now!', 'modal-create-new-account')
+        } catch (e) {
+            if (Constant.DEV) console.log(e)
+            Util.popupInfo('Failed to Create an Account',
+                JSON.stringify(e), 'modal-create-new-account')
+        }
+    })
+
 }

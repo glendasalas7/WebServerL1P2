@@ -14,8 +14,13 @@ export function addEventListeners() {
             Util.popupInfo('No search keyword', 'Enter search keyword(s) seperated by a space')
             return
         }
+        // const button = Element.formSearch.getElementsByTagName('button')[0]
+        // const label = Util.disableButton(button)
         const keywordsArray = keywords.toLowerCase().match(/\S+/g)
+        const joinedSearchKeys = keywordsArray.join('+')
+        history.pushState(null, null, Routes.routePath.SEARCH + '#' + joinedSearchKeys)
         search_page(keywordsArray)
+        Util.enableButton(button, label)
     })
 }
 
@@ -29,13 +34,10 @@ export async function search_page(keywordsArray) {
     try {
         threadList = await FirebaseController.searchThreads(keywordsArray)
     } catch (e) {
-        if (Constant.DEV)console.log(e)
+        if (Constant.DEV) console.log(e)
         return
     }
     Home.buildHomeScreen(threadList)
-    if (threadList.length > 0) {
-        const joinedSearchKey = keywordsArray.join('+')
-        history.pushState(null, null, Routes.routePath.SEARCH+'#'+joinedSearchKey)
-    }
+
 
 }

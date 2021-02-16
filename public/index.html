@@ -62,7 +62,7 @@
         </ul>
         <form
           id="form-search"
-          class="form-inline my-2 my-lg-0 nav-item modal-menus-post-auth"
+          class="form-inline my-2 my-lg-0 modal-menus-post-auth"
         >
           <input
             name="searchKeywords"
@@ -213,8 +213,78 @@
       </div>
     </div>
 
+    <div
+      class="modal fade"
+      id="modal-create-new-account"
+      data-backdrop="static"
+      data-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-create-new-account-label">
+              Create New Account
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="form-create-new-account" method="post">
+              <div>
+                <input type="email" name="email" placeholder="email address" />
+                <p id="signup-error-email" class="error-signup"></p>
+              </div>
+              <div>
+                <input type="password" name="password" placeholder="password" />
+                <p id="signup-error-password" class="error-signup"></p>
+              </div>
+              <div>
+                <input
+                  type="password"
+                  name="passwordConfirm"
+                  placeholder="confirm password"
+                />
+                <p id="signup-error-passwordConfirm" class="error-signup"></p>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-outline-primary">
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!--render contents of page-->
-    <div id="main-content" class="jumbotron"></div>
+    <div id="main-content" class="jumbotron modal-menus-post-auth"></div>
+    <div class="modal-menus-pre-auth">
+      Welcome to Awesome Discussion Formu!<br />
+      Please Sign in
+      <ul>
+        <li>to create new threads</li>
+        <li>to browns threads</li>
+        <li>to reply messages to threads</li>
+      </ul>
+      No Account Yet?
+      <button
+        class="btn btn-outline-danger"
+        data-toggle="modal"
+        data-target="#modal-create-new-account"
+      >
+        Create A New Account
+      </button>
+    </div>
     <!-- update the version number as needed -->
     <script defer src="/__/firebase/8.2.5/firebase-app.js"></script>
     <!-- include only the Firebase features as you need -->

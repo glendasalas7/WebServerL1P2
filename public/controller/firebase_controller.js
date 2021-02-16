@@ -79,5 +79,8 @@ export async function searchThreads(keywordsArray) {
         threadList.push(t)
     })
     return threadList
+}
 
+export async function signUp(email, password) {
+    await firebase.auth().createUserWithEmailAndPassword(email, password)
 }
