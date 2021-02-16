@@ -88,6 +88,8 @@ export async function thread_page(threadId) {
         var m = new Message({
             threadId, uid, email, timestamp, content
         })
+        const button = document.getElementById('button-add-new-message')
+        const label = Util.disableButton(button)
 
         try {
             const docId = await FirebaseController.addMessage(m)
@@ -101,6 +103,7 @@ export async function thread_page(threadId) {
         document.getElementById('message-reply-body').appendChild(mTag)
 
         document.getElementById('textarea-add-new-message').value = ''
+        Util.enableButton(button, label)
     })
 }
 
