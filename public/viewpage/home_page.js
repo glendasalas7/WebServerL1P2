@@ -8,12 +8,17 @@ import * as Util from './util.js'
 import * as ThreadPage from './thread_page.js'
 
 export function addEventListeners() {
-    Element.menuHome.addEventListener('click', () => {
+    Element.menuHome.addEventListener('click', async () => {
         history.pushState(null, null, Routes.routePath.HOME)
+        const label = Util.disableButton(Element.menuHome)
         home_page()
+        // await Util.sleep(1000)
+        Util.enableButton(Element.menuHome, label)
     })
     Element.formCreateThread.addEventListener('submit', async e => {
         e.preventDefault()
+        const button = Element.formCreateThread.getElementsByTagName('button')[0]
+        const label = Util.disableButton(button)
         const uid = Auth.currentUser.uid
         const email = Auth.currentUser.email
         const timestamp = Date.now()
@@ -40,6 +45,7 @@ export function addEventListeners() {
             if (Constant.DEV) console.log(e)
             Util.popupInfo('Failed to add', JSON.stringify(e), Constant.iDmodalCreateNewThread)
         }
+        Util.enableButton(button, label)
     })
 }
 

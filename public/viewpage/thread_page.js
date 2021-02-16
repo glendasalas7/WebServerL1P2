@@ -8,24 +8,24 @@ import { Message } from '../model/message.js'
 import * as Routes from '../controller/routes.js'
 
 export function addThreadViewEvents() {
-
     const viewForms = document.getElementsByClassName('thread-view-form')
     for (let n = 0; n < viewForms.length; n++) {
-        addThreadFormEvent(viewForms[n])
+        viewForms[n].addEventListener('submit', async e => {
+            e.preventDefault()
+            const button = e.target.getElementsByTagName('button')[0]
+            const label = Util.disableButton(button)
+            const threadId = e.target.threadId.value
+            history.pushState(null, null, Routes.routePath.THREAD + '#' + threadId)
+            thread_page(threadId)
+            // await Util.sleep(1000)
+            Util.enableButton(button, label)
+        })
     }
 }
 
-export function addThreadFormEvent(form) {
-    form.addEventListener('submit', e => {
-        e.preventDefault()
-        // const button = e.target.getElementByTagName('button')[0]
-        // const label = Util.disableButton(button)
-        const threadId = e.target.threadId.value
-        history.pushState(null, null, Routes.routePath.THREAD + '#' + threadId)
-        thread_page(threadId)
-        // Util.enableButton(button,label)
-    })
-}
+// export function addThreadFormEvent(form) {
+
+// }
 
 export async function thread_page(threadId) {
     if (!Auth.currentUser) {
